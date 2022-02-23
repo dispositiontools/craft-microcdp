@@ -1,0 +1,31 @@
+
+{#
+/**
+ * MicroCDP plugin for Craft CMS 3.x
+ *
+ * CdpRecords Field Input
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      http://www.disposition.tools/
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+
+{% for record in craft.microCDP.records.elementId(element.id).recordTypeId(recordType.id).all() %}
+  <article class="microcdp-record" >
+    <header >
+    <h4 class="">{{ record.title }}</h4>
+    {#<p style="font-size:0.8em">{{ record.recordTypeId }}<p>#}
+    </header>
+    <div class="w-full ">
+      {{ record.contents|raw }}
+    </div>
+    <p style="text-align:right;">{{ record.dateCreated|date("Y-m-d H:i") }} - {% set author =  craft.users.id(record.authorId).one() %} {{ author.firstName }} {{ author.lastName }}</p>
+
+  </article>
+{% endfor %}
+
+<p style="text-align:right;"><a href="#microcdpform{{recordType.id}}" data-formtype="{{recordType.id}}" class="btn newrecord" id="" >Add a new record</a></p>

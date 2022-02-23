@@ -1,0 +1,95 @@
+<section id="microcdpform{{ recordType.id }}" class="" style="display:none;background:white;padding:10px;" >
+
+<h2>Add a {{ recordType.title }} record</h2>
+{% import "_includes/forms" as forms %}
+{% set record = craft.microCDP.newRecord(recordType.id) %}
+<div class="" id="new-micro-cdp-record-form">
+<form method="POST" >
+
+
+
+<input type="hidden" name="action" value="micro-cdp/records/save-record">
+{{ redirectInput(craft.app.request.pathInfo) }}
+{{ csrfInput() }}
+{{ hiddenInput('recordId', record.id) }}
+{{ hiddenInput('siteId', record.siteId) }}
+{{ hiddenInput('recordTypeId', record.recordTypeId) }}
+{{ hiddenInput('elementId', element.id) }}
+
+{{ hiddenInput('fieldLayoutId', record.fieldLayoutId) }}
+
+<div id="fields">
+{{ forms.textField({
+  label: 'Title',
+  siteId: record.siteId,
+  translationDescription: 'This field is translated for each site.'|t('app'),
+  id: 'title',
+  name: 'title',
+  value: record.title,
+  errors:  record.getErrors('title'),
+  first: true,
+  autofocus: true,
+  required: true,
+  disabled: false,
+  maxlength: 255
+}) }}
+
+
+{{ forms.textareaField({
+  label: "",
+  siteId: record.siteId,
+  instructions: '',
+  id: 'contents',
+  name: 'contents',
+  value: record.contents,
+  errors: record.getErrors('contents'),
+  required: false
+}) }}
+
+{% js %}
+$(function() {
+$('#contents').trumbowyg({
+btns: [['strong', 'em']],
+removeformatPasted: true,
+autogrow: true
+});
+});
+{% endjs %}
+
+
+{% if record.getFieldLayout %}
+  {% set form = record.getFieldLayout().createForm(element) %}
+  {% set tabs = form.getTabMenu() %}
+  {% set fieldsHtml = form.render() %}
+
+
+    {{ fieldsHtml|raw }}
+{% endif %}
+
+
+  <input type="submit" class="btn submitbtn submit" name="submit" value="Add record" />
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/ui/trumbowyg.min.css" integrity="sha512-XjpikIIW1P7jUS8ZWIznGs9KHujZQxhbnEsqMVQ5GBTTRmmJe32+ULipOxFePB8F8j9ahKmCjyJJ22VNEX60yg==" crossorigin="anonymous" />
+
+{% js %}
+$(function() {
+  $('#fields-contents').trumbowyg({
+      btns: [['strong', 'em']],
+      removeformatPasted: true,
+      autogrow: true
+    });
+});
+{% endjs %}
+{% do view.registerJsFile("https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/trumbowyg.min.js",{
+    depends: 'craft\\web\\assets\\cp\\CpAsset',
+    position:3
+}) %}
+
+
+
+</form>
+
+
+
+</section>

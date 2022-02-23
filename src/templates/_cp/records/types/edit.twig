@@ -1,0 +1,104 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = 'Record type' %}
+
+
+{% set redirectUrl = 'micro-insight/quizzes/types' %}
+{% set continueEditingUrl = 'micro-insight/quizzes/types' %}
+{% set fullPageForm = true %}
+
+{% block actionButton %}
+    <div class="buttons">
+        <div class="btngroup submit">
+            <input type="submit" class="btn submit" value="{{ 'Save' }}">
+
+            <div class="btn submit menubtn"></div>
+
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+        <input type="hidden" name="action" value="micro-cdp/records/save-record-type">
+        {{ redirectInput('micro-cdp/records/types') }}
+        {{ hiddenInput('recordTypeId', recordType.id) }}
+        {{ hiddenInput('siteId', recordType.siteId) }}
+
+    <div id="fields">
+      {{ forms.textField({
+
+          label: 'Title',
+          siteId: recordType.siteId,
+          translationDescription: 'This field is translated for each site.'|t('app'),
+          id: 'title',
+          name: 'title',
+          value: recordType.title,
+          errors:  recordType.getErrors('title'),
+          first: true,
+          autofocus: true,
+          required: true,
+          disabled: false,
+          maxlength: 255
+      }) }}
+
+      <hr />
+
+{% if recordType.handle != "" %}
+      {{ forms.textField({
+          label: "Handle",
+          siteId: recordType.siteId,
+          instructions: "How you’ll refer to this type in the templates.",
+          id: 'handle',
+          class: 'code',
+          name: 'handle',
+          value: recordType.handle,
+          errors: recordType.getErrors('handle'),
+          required: true
+      }) }}
+{% endif %}
+
+      {{ forms.textareaField({
+          label: "Description",
+          siteId: recordType.siteId,
+          instructions: "A small description describing what this type is about",
+          id: 'description',
+          name: 'description',
+          value: recordType.description,
+          errors: recordType.getErrors('description'),
+          required: false
+      }) }}
+
+
+
+  {% if recordType.fieldLayoutId >0 %}
+      {{ forms.fieldLayoutDesignerField({
+          fieldLayout: craft.app.fields.getLayoutById(recordType.fieldLayoutId)
+      }) }}
+  {% else %}
+      {{ forms.fieldLayoutDesignerField({
+          fieldLayout: craft.app.fields.getLayoutByType('\\dispositiontools\\microcdp\\elements\\Record')
+      }) }}
+  {% endif %}
+
+    </div>
+
+
+{% endblock %}
+
+{% block settings %}
+
+these are the settings
+
+
+
+
+{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+
+{% endblock %}

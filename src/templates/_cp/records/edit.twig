@@ -1,0 +1,154 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% if not record.id %}
+  {% set title = 'New '~recordType.title~' record' %}
+{% else %}
+  {% set title = recordType.title~" record: " ~ record.title %}
+{% endif %}
+{% set element = record %}
+{% set redirectUrl = 'micro-cdp/records' %}
+{% set continueEditingUrl = url('micro-cdp/records/'~record.id) %}
+{% set fullPageForm = false %}
+
+{% block actionButton %}
+
+<div class="btngroup">
+    <button type="button" class="btn submit formsubmit" data-form="recordform">Save</button>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<form method="post" id="recordform" data-saveshortcut
+  data-saveshortcut-redirect="{{ continueEditingUrl | hash}}"
+ >
+        <input type="hidden" name="action" value="micro-cdp/records/save-record">
+        {{ csrfInput() }}
+        {{ redirectInput('micro-cdp/records') }}
+        {{ hiddenInput('recordId', record.id) }}
+        {{ hiddenInput('siteId', record.siteId) }}
+        {{ hiddenInput('recordTypeId', record.recordTypeId) }}
+        {{ hiddenInput('elementId', record.elementId) }}
+
+        {{ hiddenInput('fieldLayoutId', record.fieldLayoutId) }}
+
+    <div id="fields">
+      {{ forms.textField({
+
+          label: 'Title',
+          siteId: record.siteId,
+          translationDescription: 'This field is translated for each site.'|t('app'),
+          id: 'title',
+          name: 'title',
+          value: record.title,
+          errors:  record.getErrors('title'),
+          first: true,
+          autofocus: true,
+          required: true,
+          disabled: false,
+          maxlength: 255
+      }) }}
+
+      <hr />
+
+      {% if record.elementId %}
+      <p>
+          <b>Element ID:</b> {{ record.elementId }}<br />
+
+
+
+
+          {% set recordElement = record.getElement() %}
+
+              {% if recordElement %}
+
+
+
+                  {% if recordElement.title is defined and recordElement.title != ""  %}
+
+                    <b>Title:</b> {{ recordElement.title }}
+
+                  {% elseif recordElement.fullName is defined %}
+
+                    <b>Full name:</b> {{ recordElement.fullName }}
+
+                  {% elseif recordElement.name is defined %}
+
+                    <b>Name:</b> {{ recordElement.name }}
+
+                  {% endif %}
+
+
+                  {% if recordElement.isEditable %} (<a href="{{ recordElement.cpEditUrl }}">Edit</a>){% endif %}
+                  </p>
+
+            <hr />
+          {% endif %}
+      {% endif %}
+
+
+
+
+
+      {{ forms.textareaField({
+          label: "",
+          siteId: record.siteId,
+          instructions: "",
+          id: 'contents',
+          name: 'contents',
+          value: record.contents,
+          errors: record.getErrors('contents'),
+          required: false
+      }) }}
+
+{% js %}
+$(function() {
+  $('#contents').trumbowyg({
+      btns: [['strong', 'em']],
+      removeformatPasted: true,
+      autogrow: true
+    });
+});
+{% endjs %}
+
+
+      {% if element.getFieldLayout %}
+          {% set form = element.getFieldLayout().createForm(element) %}
+          {% set tabs = form.getTabMenu() %}
+          {% set fieldsHtml = form.render() %}
+
+
+            {{ fieldsHtml|raw }}
+      {% endif %}
+
+    </div>
+
+
+</form>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/ui/trumbowyg.min.css" integrity="sha512-XjpikIIW1P7jUS8ZWIznGs9KHujZQxhbnEsqMVQ5GBTTRmmJe32+ULipOxFePB8F8j9ahKmCjyJJ22VNEX60yg==" crossorigin="anonymous" />
+
+{% endblock %}
+
+{% block details %}
+
+    <form method="post" >
+      {{ csrfInput() }}
+      <input type="text">
+
+    </form>
+
+
+
+{% endblock %}
+
+
+{% block footer %}
+
+
+{% endblock %}
+
+{% do view.registerJsFile("https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.21.0/trumbowyg.min.js",{
+    depends: 'craft\\web\\assets\\cp\\CpAsset',
+    position:3
+}) %}

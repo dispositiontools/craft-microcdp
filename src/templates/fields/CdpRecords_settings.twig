@@ -1,0 +1,33 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * MicroCDP plugin for Craft CMS
+ *
+ * CdpRecords Field Settings
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      http://www.disposition.tools/
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{# do view.registerAssetBundle("dispositiontools\\microcdp\\assetbundles\\microcdp\\MicroCDPAsset") #}
+
+
+
+
+
+
+
+{{ forms.radioGroupField({
+    label: "Record Type",
+    instructions: "What type of records are you storing in this field"|t,
+    name: 'recordTypeId',
+    id: 'recordTypeId',
+    options: settings['recordTypeOptions'],
+    value: settings['recordTypeId']
+}) }}

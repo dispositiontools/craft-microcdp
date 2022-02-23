@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * MicroCDP plugin for Craft CMS
+ *
+ * Topusers Widget Settings
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("dispositiontools\\microcdp\\assetbundles\\microcdp\\MicroCDPAsset") %}
+
+{{ forms.textField({
+    label: 'Message',
+    instructions: 'Enter a message here.',
+    id: 'message',
+    name: 'message',
+    value: widget['message']})
+}}

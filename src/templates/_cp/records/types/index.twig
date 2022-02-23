@@ -1,0 +1,66 @@
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set title = 'Record Types'%}
+
+
+{% set fullPageForm = true %}
+
+{% block actionButton %}
+<div class="buttons">
+    <div class="btngroup submit">
+          <a href="{{ url('micro-cdp/records/types/add') }}" class="btn submit" >New record type</a>
+{#
+        <div class="btn submit menubtn"></div>
+        <div class="menu">
+            <ul>
+              {% for quizType in quizTypes %}
+                <li>
+                      <a href="{{ url('micro-insight/quizzes/add') }}?quizType={{quizType.id}}" class="btn submit" >New {{ quizType.title }} Quiz</a>
+                </li>
+              {% endfor %}
+            </ul>
+        </div>
+#}
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+
+    <table id="carts" class="data fullwidth collapsible">
+          <thead>
+            <tr>
+              <th scope="col">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for recordType in recordTypes %}
+              <tr data-id="{{ recordType.id }}" data-name="" style="font-size: 13px;">
+                    <td scope="row" data-title="Order">
+                        <a class="nav-anchor" href="{{ url('micro-cdp/records/types/'~ recordType.id ~'/edit') }}">{{ recordType.title }}</a>
+                    </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+
+
+{% endblock %}
+
+{% block settings %}
+
+these are the settings
+
+
+
+
+{% endblock %}
+
+{% block meta %}
+    {{ parent() }}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * MicroCDP plugin for Craft CMS
+ *
+ * CdpActions Widget Body
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      http://www.disposition.tools/
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@dispositiontools/microcdp/assetbundles/cdpactionswidget/dist', true) ~ '/img/CdpActions-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>{{ message }}</p>

@@ -1,0 +1,32 @@
+{% extends "_layouts/elementindex" %}
+{% set title = "CDP Records" %}
+{% set elementType = 'dispositiontools\\microcdp\\elements\\Record' %}
+
+
+
+
+{% block actionButton %}
+    <div class="buttons">
+        <div class="btngroup submit">
+              <a  class="btn submit" >New Record</a>
+
+            <div class="btn submit menubtn"></div>
+            <div class="menu">
+                <ul>
+                  {% for recordType in recordTypes %}
+                    <li>
+                          <a href="{{ url('micro-cdp/records/add') }}?recordTypeId={{recordType.id}}" class="btn submit" >New {{ recordType.title }} record</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% if sectionHandle is defined %}
+    {% js %}
+        window.defaultSectionHandle = "{{ sectionHandle|e('js') }}";
+    {% endjs %}
+{% endif %}

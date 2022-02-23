@@ -1,0 +1,46 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * MicroCDP plugin for Craft CMS 3.x
+ *
+ * MicroCDP index.twig
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("dispositiontools\\microcdp\\assetbundles\\microcdp\\MicroCDPAsset") %}
+{% do view.registerAssetBundle("dispositiontools\\microcdp\\assetbundles\\microcdpcpsection\\MicrocdpCPSectionAsset") %}
+
+{# Link for the ? icon at the bottom of the page #}
+{% set docsUrl = "https://github.com/https://github.com/dispositiontools/microcdp/micro-cdp/blob/master/README.md" %}
+
+{# The title of this CP section #}
+{% set title = "MicroCDP" %}
+
+{# The URL to this plugin's base CP section #}
+{% set pluginCpUrl = url('micro-cdp') %}
+
+{# Get a URL to an image in our AssetBundle #}
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@dispositiontools/microcdp/assetbundles/microcdpcpsection/dist', true) ~ '/img/Microcdp-icon.svg' %}
+
+{# Content that should appear in the page header#}
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ pluginCpUrl }}" class="btn submit add icon">{{ "Click Me!"|t('micro-cdp') }}</a>
+    </div>
+{% endset %}
+
+{# The content of the CP Section#}
+{% set content %}
+    <h2>{{ "Microcdp CP Section body goes here"|t('micro-cdp') }}</h2>
+    <img src="{{ iconUrl }}" height="64" width="64" />
+    <p class="textline"></p>
+{% endset %}

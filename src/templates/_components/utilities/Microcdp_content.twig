@@ -1,0 +1,24 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * MicroCDP plugin for Craft CMS
+ *
+ * Microcdp Utility Content
+ *
+ * @author    Disposition Tools
+ * @copyright Copyright (c) 2020 Disposition Tools
+ * @link      https://www.disposition.tools
+ * @package   MicroCDP
+ * @since     1.0.0
+ */
+#}
+
+<h1>Microcdp</h1>
+
+{% set iconUrl = view.getAssetManager().getPublishedUrl('@dispositiontools/microcdp/assetbundles/microcdputility/dist', true) ~ '/img/Microcdp-icon.svg' %}
+
+<img src="{{ iconUrl }}" height="64" width="64" />
+
+<p>Your Utility content goes here</p>
+
+<p>{{ someVar }}</p>

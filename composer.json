@@ -1,0 +1,53 @@
+{
+    "name": "dispositiontools/craft-microcdp",
+    "description": "Track user events and get user summary data",
+    "type": "craft-plugin",
+    "version": "0.0.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "microcdp"
+    ],
+    "support": {
+        "docs": "https://github.com/dispositiontools/craft-microcdp/blob/main/README.md",
+        "issues": "https://github.com/https://github.com/dispositiontools/microcdp/micro-cdp/issues"
+    },
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Disposition Tools",
+            "homepage": "https://www.disposition.tools"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0"
+    },
+    "require-dev": {
+      "craftcms/cms": "^3.2.0",
+      "codeception/codeception": "^3.0",
+      "vlucas/phpdotenv": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "dispositiontools\\microcdp\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "MicroCDP",
+        "handle": "micro-cdp",
+        "developer": "Disposition Tools",
+        "developerUrl": "https://www.disposition.tools",
+        "documentationUrl": "https://github.com/dispositiontools/craft-microcdp/blob/main/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/https://github.com/dispositiontools/microcdp/micro-cdp/master/CHANGELOG.md",
+        "components": {
+            "cdpevents": "dispositiontools\\microcdp\\services\\Cdpevents",
+            "cdpstats": "dispositiontools\\microcdp\\services\\Cdpstats",
+            "cpanel": "dispositiontools\\microcdp\\services\\Cpanel",
+            "records": "dispositiontools\\microcdp\\services\\Records",
+            "history": "dispositiontools\\microcdp\\services\\History"
+        },
+        "class": "dispositiontools\\microcdp\\MicroCDP"
+    }
+}
