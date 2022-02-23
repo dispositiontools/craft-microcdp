@@ -164,6 +164,124 @@ class Install extends Migration
             );
         }
 
+        // microcdp_records table
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%microcdp_records}}');
+        if ($tableSchema === null) {
+            $tablesCreated = true;
+            $this->createTable(
+                '{{%microcdp_records}}',
+                [
+
+                    'id'                        => $this->primaryKey(),
+                    'uid'                       => $this->uid(),
+                    'dateCreated'               => $this->dateTime()->notNull(),
+                    'dateUpdated'               => $this->dateTime()->notNull(),
+
+                    'authorId'                  => $this->integer()->defaultValue(NULL),
+                    'elementId'                  => $this->integer()->defaultValue(NULL),
+                    'elementType'               => $this->string()->defaultValue(NULL),
+                    'recordTypeId'              => $this->integer(),
+                    'contents'                  => $this->text()->defaultValue(NULL),
+
+                    'recordKindId'              => $this->integer()->defaultValue(NULL),
+
+                    'statusId'                  =>  $this->integer()->defaultValue(NULL),
+
+                    'isAction'                  => $this->boolean()->defaultValue(NULL),
+
+                    'actionTypeId'              => $this->integer()->defaultValue(NULL),
+
+                    'actionDescription'         => $this->text()->defaultValue(NULL),
+                    'isCompleted'               => $this->boolean()->defaultValue(NULL),
+                    'dateActionFirstCompleted'  => $this->dateTime()->defaultValue(NULL),
+
+                ]
+            );
+        }
+
+
+        // microcdp_records table
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%microcdp_recordkinds}}');
+        if ($tableSchema === null) {
+            $tablesCreated = true;
+            $this->createTable(
+                '{{%microcdp_recordkinds}}',
+                [
+
+                    'id'                        => $this->primaryKey(),
+                    'uid'                       => $this->uid(),
+                    'dateCreated'               => $this->dateTime()->notNull(),
+                    'dateUpdated'               => $this->dateTime()->notNull(),
+                    'handle' 	            => $this->string()->defaultValue(NULL),
+                    'userId'                  => $this->integer()->defaultValue(NULL),
+                    'recordTypeId'              => $this->integer(),
+                    'description'                  => $this->text()->defaultValue(NULL),
+
+                ]
+            );
+        }
+
+
+
+        // microcdp_records table
+        $tableSchema = Craft::$app->db->schema->getTableSchema('{{%microcdp_recordtypes}}');
+        if ($tableSchema === null) {
+            $tablesCreated = true;
+            $this->createTable(
+                '{{%microcdp_recordtypes}}',
+                [
+
+                    'id'                        => $this->primaryKey(),
+                    'uid'                       => $this->uid(),
+                    'dateCreated'               => $this->dateTime()->notNull(),
+                    'dateUpdated'               => $this->dateTime()->notNull(),
+
+                    'userId'                    => $this->integer()->defaultValue(NULL),
+                    'siteId'                    => $this->integer()->notNull(),
+                    'enabled' 	                => $this->boolean()->defaultValue(NULL),
+                    'archived' 	                => $this->boolean()->defaultValue(NULL),
+
+                    'recordCount'               => $this->integer()->defaultValue(NULL),
+                    'actionCount'               => $this->integer()->defaultValue(NULL),
+                    'actionCompletedCount'               => $this->integer()->defaultValue(NULL),
+
+                    'title' 	                  => $this->string()->defaultValue(NULL),
+                    'description' 	            => $this->string()->defaultValue(NULL),
+                    'handle' 	            => $this->string()->defaultValue(NULL),
+
+                    'fieldLayoutId'             => $this->integer()->notNull(),
+
+                ]
+            );
+        }
+
+      // microcdp_history table
+      $tableSchema = Craft::$app->db->schema->getTableSchema('{{%microcdp_history}}');
+      if ($tableSchema === null) {
+          $tablesCreated = true;
+          $this->createTable(
+              '{{%microcdp_history}}',
+              [
+
+                  'id'                        => $this->primaryKey(),
+                  'uid'                       => $this->uid(),
+                  'dateCreated'               => $this->dateTime()->notNull(),
+                  'dateUpdated'               => $this->dateTime()->notNull(),
+
+                  'userId'                    => $this->integer()->defaultValue(NULL),
+                  'historyType'             => $this->text(20)->defaultValue(NULL),
+                  'recordId'                  => $this->integer(),
+                  'notes'                  => $this->text()->defaultValue(NULL),
+
+                  'status'                  =>  $this->integer()->defaultValue(NULL),
+                  'isAction'                  => $this->boolean()->defaultValue(NULL),
+                  'isCompleted'               => $this->boolean()->defaultValue(NULL),
+
+
+              ]
+          );
+      }
+
         return $tablesCreated;
     }
 
@@ -174,62 +292,13 @@ class Install extends Migration
      */
     protected function createIndexes()
     {
-    // microcdp_cdpevents table
-        $this->createIndex(
-            $this->db->getIndexName(
-                '{{%microcdp_cdpevents}}',
-                'some_field',
-                true
-            ),
-            '{{%microcdp_cdpevents}}',
-            'some_field',
-            true
-        );
-        // Additional commands depending on the db driver
-        switch ($this->driver) {
-            case DbConfig::DRIVER_MYSQL:
-                break;
-            case DbConfig::DRIVER_PGSQL:
-                break;
-        }
-
-    // microcdp_cdpstats table
-        $this->createIndex(
-            $this->db->getIndexName(
-                '{{%microcdp_cdpstats}}',
-                'some_field',
-                true
-            ),
-            '{{%microcdp_cdpstats}}',
-            'some_field',
-            true
-        );
-        // Additional commands depending on the db driver
-        switch ($this->driver) {
-            case DbConfig::DRIVER_MYSQL:
-                break;
-            case DbConfig::DRIVER_PGSQL:
-                break;
-        }
-
-    // microcdp_cdpcookies table
-        $this->createIndex(
-            $this->db->getIndexName(
-                '{{%microcdp_cdpcookies}}',
-                'some_field',
-                true
-            ),
-            '{{%microcdp_cdpcookies}}',
-            'some_field',
-            true
-        );
-        // Additional commands depending on the db driver
-        switch ($this->driver) {
-            case DbConfig::DRIVER_MYSQL:
-                break;
-            case DbConfig::DRIVER_PGSQL:
-                break;
-        }
+      $this->createIndex(null, '{{%microcdp_records}}', ['elementId']);
+      $this->createIndex(null, '{{%microcdp_records}}', ['authorId']);
+      $this->createIndex(null, '{{%microcdp_records}}', ['isAction']);
+      $this->createIndex(null, '{{%microcdp_records}}', ['isCompleted']);
+      $this->createIndex(null, '{{%microcdp_records}}', ['recordTypeId']);
+      $this->createIndex(null, '{{%microcdp_history}}', ['recordId']);
+      $this->createIndex(null, '{{%microcdp_history}}', ['userId']);
     }
 
     /**
@@ -271,6 +340,15 @@ class Install extends Migration
             'CASCADE',
             'CASCADE'
         );
+
+        $this->addForeignKey(null, '{{%microcdp_recordkinds}}', ['id'],      '{{%elements}}',        ['id'], 'CASCADE');
+        $this->addForeignKey(null, '{{%microcdp_records}}', ['id'],      '{{%elements}}',        ['id'], 'CASCADE');
+        $this->addForeignKey(null, '{{%microcdp_records}}', ['recordTypeId'],      '{{%microcdp_recordtypes}}',        ['id'], 'CASCADE');
+        //$this->addForeignKey(null, '{{%microcdp_recordtypes}}',       ['fieldLayoutId'], '{{%fieldlayouts}}', ['id'], 'SET NULL');
+        $this->addForeignKey(null, '{{%microcdp_records}}',       ['authorId'], '{{%users}}', ['id'], 'CASCADE');
+        $this->addForeignKey(null, '{{%microcdp_history}}',       ['userId'], '{{%users}}', ['id'], 'CASCADE');
+        $this->addForeignKey(null, '{{%microcdp_records}}', ['elementId'],      '{{%elements}}',        ['id'], 'CASCADE');
+
     }
 
     /**
