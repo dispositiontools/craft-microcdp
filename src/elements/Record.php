@@ -98,6 +98,7 @@ class Record extends Element
     public $dateActionFirstCompleted;
     public $recordTypeTitle;
     public $isRead = false;
+    public $fieldLayoutId;
 
     // Static Methods
     // =========================================================================
