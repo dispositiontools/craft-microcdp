@@ -109,7 +109,7 @@ class CdpRecords extends Field implements PreviewableFieldInterface
           'recordType' => $recordType
       ]);
 
-
+/*
         Craft::$app->getView()->hook('cp.entries.edit.details', function(array &$context){
           return $this->htmlform;
         });
@@ -117,7 +117,7 @@ class CdpRecords extends Field implements PreviewableFieldInterface
         Craft::$app->getView()->hook('cp.users.edit.details', function(array &$context){
           return $this->htmlform;
         });
-
+*/
       //return "hello " .$element->id;
 
 

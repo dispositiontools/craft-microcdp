@@ -95,7 +95,7 @@ class MicroCDP extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '0.0.2';
+    public $schemaVersion = '0.0.5';
 
     /**
      * Set to `true` if the plugin should have a settings view in the control panel.
