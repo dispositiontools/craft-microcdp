@@ -103,13 +103,13 @@ class CdpRecords extends Field implements PreviewableFieldInterface
       $recordType = MicroCDP::$plugin->records->getRecordTypeById($this->recordTypeId);
 
 
-
+/*
       $this->htmlform = Craft::$app->getView()->renderTemplate('micro-cdp/fields/CdpRecords_form.twig', [
           'element' => $element,
           'recordType' => $recordType
       ]);
 
-/*
+
         Craft::$app->getView()->hook('cp.entries.edit.details', function(array &$context){
           return $this->htmlform;
         });
