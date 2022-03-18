@@ -24,21 +24,22 @@ class m220318_153921_microcdp_record_updates_and_events extends Migration
             $this->addColumn($table, 'isEvent', $this->boolean()->defaultValue(NULL)->after('dateActionFirstCompleted'));
         }
 
+        if (!$this->db->columnExists($table, 'eventOwner')) {
+            $this->addColumn($table, 'eventOwner', $this->integer()->defaultValue(NULL)->after('isEvent'));
+        }
+
+        if (!$this->db->columnExists($table, 'eventUsers')) {
+            $this->addColumn($table, 'eventUsers', $this->string(255)->defaultValue(NULL)->after('eventOwner'));
+        }
+
         if (!$this->db->columnExists($table, 'dateEventStart')) {
-            $this->addColumn($table, 'dateEventStart', $this->dateTime()->defaultValue(NULL)->after('eventOwner'));
+            $this->addColumn($table, 'dateEventStart', $this->dateTime()->defaultValue(NULL)->after('eventUsers'));
         }
 
         if (!$this->db->columnExists($table, 'dateEventEnd')) {
             $this->addColumn($table, 'dateEventEnd', $this->dateTime()->defaultValue(NULL)->after('dateEventStart'));
         }
 
-        if (!$this->db->columnExists($table, 'eventOwner')) {
-            $this->addColumn($table, 'eventOwner', $this->integer()->defaultValue(NULL)->after('isEvent'));
-        }
-
-        if (!$this->db->columnExists($table, 'eventUsers')) {
-            $this->addColumn($table, 'eventUsers', $this->string(255)->defaultValue(NULL)->after('dateEventStart'));
-        }
 
 
         if (!$this->db->columnExists($table, 'eventDuration')) {
