@@ -95,7 +95,7 @@ class MicroCDP extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '0.0.6';
+    public $schemaVersion = '0.0.7';
 
     /**
      * Set to `true` if the plugin should have a settings view in the control panel.
@@ -328,7 +328,12 @@ class MicroCDP extends Plugin
      */
     protected function createSettingsModel()
     {
-        return new Settings();
+        return new Settings(
+          [
+          "savePageEvents" => false,
+          "saveUserEvents" => true,
+          ]
+        );
     }
 
     /**
