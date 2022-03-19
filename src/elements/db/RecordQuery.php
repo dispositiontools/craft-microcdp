@@ -11,7 +11,8 @@ class RecordQuery extends ElementQuery
 {
     public $recordTypeId;
     public $elementId;
-
+    public $isEvent;
+    public $eventOwner;
 
     public function recordTypeId($value)
     {
@@ -24,6 +25,24 @@ class RecordQuery extends ElementQuery
     {
         $this->elementId = $value;
 
+        return $this;
+    }
+
+    public function isEvent($value)
+    {
+        $this->isEvent = $value;
+        return $this;
+    }
+
+    public function isCompleted($value)
+    {
+        $this->isCompleted = $value;
+        return $this;
+    }
+
+    public function eventOwner($value)
+    {
+        $this->eventOwner = $value;
         return $this;
     }
 
@@ -46,7 +65,15 @@ class RecordQuery extends ElementQuery
             'microcdp_records.actionTypeId',
             'microcdp_records.actionDescription',
             'microcdp_records.isCompleted',
-            'microcdp_records.dateActionFirstCompleted'
+            'microcdp_records.dateActionFirstCompleted',
+            'microcdp_records.isEvent',
+            'microcdp_records.eventOwner',
+            'microcdp_records.eventUsers',
+            'microcdp_records.dateEventStart',
+            'microcdp_records.dateEventEnd',
+            'microcdp_records.eventDuration',
+            'microcdp_records.lastUpdatedBy',
+            'microcdp_records.dateActionCompleteBy',
         ]);
 
         $currentUser = Craft::$app->getUser()->getIdentity();
@@ -79,6 +106,14 @@ class RecordQuery extends ElementQuery
 
         if ($this->elementId) {
             $this->subQuery->andWhere(Db::parseParam('microcdp_records.elementId', $this->elementId));
+        }
+
+        if ($this->isEvent) {
+            $this->subQuery->andWhere(Db::parseParam('microcdp_records.isEvent', $this->isEvent));
+        }
+
+        if ($this->eventOwner) {
+            $this->subQuery->andWhere(Db::parseParam('microcdp_records.eventOwner', $this->eventOwner));
         }
 
 

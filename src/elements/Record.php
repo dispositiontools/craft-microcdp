@@ -100,6 +100,16 @@ class Record extends Element
     public $isRead = false;
     public $fieldLayoutId;
 
+    public $isEvent;
+    public $eventOwner;
+    public $eventUsers;
+    public $dateEventStart;
+    public $dateEventEnd;
+    public $eventDuration;
+    public $lastUpdatedBy;
+    public $dateActionCompleteBy;
+
+
     // Static Methods
     // =========================================================================
 
@@ -743,6 +753,15 @@ class Record extends Element
           'actionDescription' => $this->actionDescription,
           'isCompleted' => $this->isCompleted,
           'dateActionFirstCompleted' => $this->dateActionFirstCompleted,
+
+          'isEvent' => $this->isEvent,
+          'eventOwner' => $this->eventOwner,
+          'eventUsers' => $this->eventUsers,
+          'dateEventStart' => $this->dateEventStart,
+          'dateEventEnd' => $this->dateEventEnd,
+          'eventDuration' => $this->eventDuration,
+          'lastUpdatedBy' => $this->lastUpdatedBy,
+          'dateActionCompleteBy' => $this->dateActionCompleteBy,
         ];
 
           if ($isNew) {
