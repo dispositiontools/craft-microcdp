@@ -40,6 +40,18 @@ class RecordQuery extends ElementQuery
         return $this;
     }
 
+    public function dateEventStart($value)
+    {
+        $this->dateEventStart = $value;
+        return $this;
+    }
+
+    public function dateEventEnd($value)
+    {
+        $this->dateEventEnd = $value;
+        return $this;
+    }
+
     public function eventOwner($value)
     {
         $this->eventOwner = $value;
@@ -96,7 +108,7 @@ class RecordQuery extends ElementQuery
 
         }
 
-;
+
 
 
 /**/
@@ -115,6 +127,16 @@ class RecordQuery extends ElementQuery
         if ($this->eventOwner) {
             $this->subQuery->andWhere(Db::parseParam('microcdp_records.eventOwner', $this->eventOwner));
         }
+
+        if ($this->dateEventStart) {
+            $this->subQuery->andWhere(Db::parseParam('microcdp_records.dateEventStart', $this->dateEventStart));
+        }
+
+        if ($this->dateEventEnd) {
+            $this->subQuery->andWhere(Db::parseParam('microcdp_records.dateEventEnd', $this->dateEventEnd));
+        }
+
+
 
 
 
