@@ -13,6 +13,8 @@ class RecordQuery extends ElementQuery
     public $elementId;
     public $isEvent;
     public $eventOwner;
+    public $dateEventStart;
+    public $dateEventEnd;
 
     public function recordTypeId($value)
     {
