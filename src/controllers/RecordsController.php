@@ -203,7 +203,7 @@ class RecordsController extends Controller
               ray($dateEventStart);
               if($dateEventStart)
               {
-                  $Record->dateEventStart = $dateEventStart;
+                  $Record->dateEventStart = $dateEventStart::toIso8601();
               }
             }
 
@@ -216,16 +216,17 @@ class RecordsController extends Controller
               ray($dateEventEnd);
               if($dateEventEnd)
               {
-                  $Record->dateEventEnd = $dateEventEnd;
-                  $diff = $Record->dateEventStart->diff($Record->dateEventEnd);
+                  $Record->dateEventEnd = $dateEventEnd::toIso8601();
+                  $diff = $dateEventStart->diff($dateEventEnd);
                   $Record->eventDuration = $diff->intervalToSeconds;
               }
 
             }elseif($request->post('eventDuration'))
             {
               $duration = $request->post('eventDuration');
-              $dateEventEnd = clone $Record->dateEventStart;
+              $dateEventEnd = clone $dateEventStart;
               $dateEventEnd->modify('+'.$duration.' seconds');
+              $Record->dateEventEnd = $dateEventEnd::toIso8601();
               $Record->eventDuration = $request->post('eventDuration');
             }
 
