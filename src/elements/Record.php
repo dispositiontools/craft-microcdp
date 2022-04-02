@@ -739,7 +739,8 @@ class Record extends Element
     public function afterSave(bool $isNew)
     {
 
-
+      ray($this->getDirtyAttributes());
+      ray($this->getDirtyFields());
 
         $insertData = [
           'authorId'   => $this->authorId,
@@ -780,7 +781,7 @@ class Record extends Element
           }
 
 
-
+          // save history on who updated the data
           $historyModel = new historyModel();
           $currentUser = Craft::$app->getUser()->getIdentity();
 
