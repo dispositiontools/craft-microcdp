@@ -181,10 +181,12 @@ class RecordsController extends Controller
             {
               $Record->isEvent = $request->post('isEvent');
             }
-
+            ray($request->post('eventOwner'));
             if($request->post('eventOwner'))
             {
               $Record->eventOwner = $request->post('eventOwner');
+
+            ray($Record->eventOwner);
             }
 
             if($request->post('eventUsers'))
@@ -195,7 +197,10 @@ class RecordsController extends Controller
             $dateEventStart = false;
             if($request->post('dateEventStart'))
             {
+
+              ray($request->post('dateEventStart'));
               $dateEventStart = DateTimeHelper::toDateTime($request->post('dateEventStart'));
+              ray($dateEventStart);
               if($dateEventStart)
               {
                   $Record->dateEventStart = $dateEventStart;
@@ -203,10 +208,12 @@ class RecordsController extends Controller
             }
 
 
-
+            ray( $request->post('eventDuration') );
             if($request->post('dateEventEnd'))
             {
+              ray($request->post('dateEventEnd'));
               $dateEventEnd = DateTimeHelper::toDateTime($request->post('dateEventEnd'));
+              ray($dateEventEnd);
               if($dateEventEnd)
               {
                   $Record->dateEventEnd = $dateEventEnd;

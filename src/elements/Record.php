@@ -795,6 +795,7 @@ class Record extends Element
 
           $historyModel->recordId = $this->id;
           $historyModel->historyType = 'updated';
+          MicroCDP::$plugin->history->saveHistory( $historyModel );
 
 
           parent::afterSave($isNew);
