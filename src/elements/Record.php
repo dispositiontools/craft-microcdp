@@ -22,6 +22,7 @@ use craft\elements\actions\Delete;
 use craft\helpers\Html;
 use craft\i18n\Locale;
 use dispositiontools\microcdp\elements\actions\MarkAsRead;
+use dispositiontools\microcdp\models\History as historyModel;
 /**
  * Records Element
  *
@@ -777,6 +778,24 @@ class Record extends Element
                   ->update(self::TABLE, $insertData, ['id' => $this->id])
                   ->execute();
           }
+
+
+
+          $historyModel = new historyModel();
+          $currentUser = Craft::$app->getUser()->getIdentity();
+
+          if($currentUser)
+          {
+            $userId = $currentUser->id;
+            $historyModel->userId = $userId;
+          }
+          else{
+            $historyModel->userId = $this->lastUpdatedBy;
+          }
+
+          $historyModel->recordId = $this->id;
+          $historyModel->historyType = 'updated';
+
 
           parent::afterSave($isNew);
 

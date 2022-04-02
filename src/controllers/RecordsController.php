@@ -17,6 +17,7 @@ use craft\web\Controller;
 use craft\base\Element;
 use dispositiontools\microcdp\models\Recordtype as RecordtypeModel;
 use craft\helpers\StringHelper;
+use craft\helpers\DateTimeHelper;
 
 use dispositiontools\microcdp\elements\Record as RecordElement;
 
@@ -100,23 +101,145 @@ class RecordsController extends Controller
 
             }
 
-            $Record->title = $request->post('title');
-            $Record->authorId = $currentUser->id;
+            if($request->post('title'))
+            {
+              $Record->title = $request->post('title');
+            }
 
-            $Record->fieldLayoutId = $request->post('fieldLayoutId');
-            $Record->contents = $request->post('contents');
+            if($request->post('authorId'))
+            {
+              $Record->authorId = $request->post('authorId');
+            }
+            else
+            {
+                $Record->authorId = $currentUser->id;
+            }
+
+            if($request->post('fieldLayoutId'))
+            {
+              $Record->fieldLayoutId = $request->post('fieldLayoutId');
+            }
+
+            if($request->post('contents'))
+            {
+              $Record->contents = $request->post('contents');
+            }
+
+            if($request->post('recordTypeId'))
+            {
+              $Record->recordTypeId = $request->post('recordTypeId');
+            }
+
+            if($request->post('elementId'))
+            {
+              $Record->elementId = $request->post('elementId');
+            }
+
+            if($request->post('elementType'))
+            {
+              $Record->elementType = $request->post('elementType');
+            }
+
+            if($request->post('recordKindId'))
+            {
+              $Record->recordKindId = $request->post('recordKindId');
+            }
+
+            if($request->post('statusId'))
+            {
+              $Record->statusId = $request->post('statusId');
+            }
+
+            if($request->post('isAction'))
+            {
+              $Record->isAction = $request->post('isAction');
+            }
+
+            if($request->post('actionTypeId'))
+            {
+              $Record->actionTypeId = $request->post('actionTypeId');
+            }
+
+            if($request->post('actionDescription'))
+            {
+              $Record->actionDescription = $request->post('actionDescription');
+            }
+
+            if($request->post('isCompleted'))
+            {
+              $Record->isCompleted = $request->post('isCompleted');
+            }
+
+            if($request->post('dateActionFirstCompleted'))
+            {
+              $Record->dateActionFirstCompleted = $request->post('dateActionFirstCompleted');
+            }
 
 
-            $Record->recordTypeId = $request->post('recordTypeId');
-            $Record->elementId = $request->post('elementId');
-            $Record->elementType = $request->post('elementType');
-            $Record->recordKindId = $request->post('recordKindId');
-            $Record->statusId = $request->post('statusId');
-            $Record->isAction = $request->post('isAction');
-            $Record->actionTypeId = $request->post('actionTypeId');
-            $Record->actionDescription = $request->post('actionDescription');
-            $Record->isCompleted = $request->post('isCompleted');
-            $Record->dateActionFirstCompleted = $request->post('dateActionFirstCompleted');
+
+            if($request->post('isEvent'))
+            {
+              $Record->isEvent = $request->post('isEvent');
+            }
+
+            if($request->post('eventOwner'))
+            {
+              $Record->eventOwner = $request->post('eventOwner');
+            }
+
+            if($request->post('eventUsers'))
+            {
+              $Record->eventUsers = $request->post('eventUsers');
+            }
+
+            $dateEventStart = false;
+            if($request->post('dateEventStart'))
+            {
+              $dateEventStart = DateTimeHelper::toDateTime($request->post('dateEventStart'));
+              if($dateEventStart)
+              {
+                  $Record->dateEventStart = $dateEventStart;
+              }
+            }
+
+
+
+            if($request->post('dateEventEnd'))
+            {
+              $dateEventEnd = DateTimeHelper::toDateTime($request->post('dateEventEnd'));
+              if($dateEventEnd)
+              {
+                  $Record->dateEventEnd = $dateEventEnd;
+                  $diff = $Record->dateEventStart->diff($Record->dateEventEnd);
+                  $Record->eventDuration = $diff->intervalToSeconds;
+              }
+
+            }elseif($request->post('eventDuration'))
+            {
+              $duration = $request->post('eventDuration');
+              $dateEventEnd = clone $Record->dateEventStart;
+              $dateEventEnd->modify('+'.$duration.' seconds');
+              $Record->eventDuration = $request->post('eventDuration');
+            }
+
+            if($request->post('dateActionCompleteBy'))
+            {
+              $Record->dateActionCompleteBy = $request->post('dateActionCompleteBy');
+            }
+
+
+
+
+            if($request->post('lastUpdatedBy'))
+            {
+              $Record->lastUpdatedBy = $request->post('lastUpdatedBy');
+            }
+            else
+            {
+                $Record->lastUpdatedBy = $currentUser->id;
+            }
+
+
 
 
             $Record->setFieldValuesFromRequest('fields');

@@ -76,6 +76,24 @@ class MicroCDPVariable
       return MicroCDP::$plugin->records->getElementsByRecordSearch($searchTerm,$siteId);
     }
 
+    // {{ craft.microCDP.createHistory(recordId, historyType, userId, notes ) }}
+    public function createHistory($recordId, $historyType="viewed",$userId = null, $notes = null )
+    {
+      MicroCDP::$plugin->history->createHistory($recordId,$historyType,$notes,$userId );
+
+      return '';
+    }
+
+
+    // {{ craft.microCDP.history(recordId, options ) }}
+    public function history($recordId, $options = null )
+    {
+      return MicroCDP::$plugin->history->getHistoryByRecordId($recordId, $options );
+
+      return '';
+    }
+
+
 
     // {{ craft.microCDP.eventsByUserId(currentUser.id, $options) }}
     public function eventsByUserId($userId, $options = false)

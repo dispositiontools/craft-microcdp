@@ -70,6 +70,41 @@ class History extends Component
     }
 
 
+    public function viewHistory($recordId, $historyType="viewed",$userId = null )
+    {
+
+    }
+
+
+    // MicroCDP::$plugin->history->createHistory($recordId,$historyType="viewed",$notes=null,$userId = null)
+    public function createHistory($recordId,$historyType="viewed",$notes=null,$userId = null)
+    {
+
+        if(!$userId)
+        {
+          $currentUser = Craft::$app->getUser()->getIdentity();
+          if($currentUser)
+          {
+            $userId = $currentUser->id;
+          }
+          else {
+              $userId = null;
+          }
+        }
+
+        $historyModel = new HistoryModel();
+
+        $historyModel->userId = $userId;
+        $historyModel->recordId = $recordId;
+        $historyModel->historyType = 'read';
+        $historyModel->notes = $notes;
+
+        $historyRecord = $this->saveHistory( $historyModel );
+
+        return $historyRecord;
+    }
+
+
     // MicroCDP::$plugin->history->markRecordAsRead($recordId, $userId);
     public function markRecordAsRead($recordId,$notes=null,$userId = null)
     {
@@ -82,7 +117,7 @@ class History extends Component
 
         $historyModel = new HistoryModel();
 
-        $historyModel->userId = 1;
+        $historyModel->userId = $userId;
         $historyModel->recordId = $recordId;
         $historyModel->historyType = 'read';
         $historyModel->notes = $notes;

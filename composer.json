@@ -2,7 +2,7 @@
     "name": "dispositiontools/craft-microcdp",
     "description": "Track user events and get user summary data",
     "type": "craft-plugin",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "keywords": [
         "craft",
         "cms",
