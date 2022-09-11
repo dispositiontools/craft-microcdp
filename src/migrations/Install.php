@@ -128,6 +128,7 @@ class Install extends Migration
             );
         }
 
+
     // microcdp_cdpstats table
         $tableSchema = Craft::$app->db->schema->getTableSchema('{{%microcdp_cdpstats}}');
         if ($tableSchema === null) {
@@ -195,9 +196,18 @@ class Install extends Migration
                     'isCompleted'               => $this->boolean()->defaultValue(NULL),
                     'dateActionFirstCompleted'  => $this->dateTime()->defaultValue(NULL),
 
+                    'isEvent' => $this->boolean()->defaultValue(NULL),
+                    'eventOwner' => $this->integer()->defaultValue(NULL),
+                    'eventUsers' => $this->string(255)->defaultValue(NULL),
+                    'dateEventStart' => $this->dateTime()->defaultValue(NULL),
+                    'dateEventEnd' => $this->dateTime()->defaultValue(NULL),
+                    'eventDuration' => $this->integer()->defaultValue(NULL),
+                    'lastUpdatedBy' => $this->integer()->defaultValue(NULL),
+                    'dateActionCompleteBy' => $this->dateTime()->defaultValue(NULL),
                 ]
             );
         }
+
 
 
         // microcdp_records table

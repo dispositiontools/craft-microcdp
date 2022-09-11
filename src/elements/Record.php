@@ -739,8 +739,8 @@ class Record extends Element
     public function afterSave(bool $isNew)
     {
 
-      ray($this->getDirtyAttributes());
-      ray($this->getDirtyFields());
+      // ray($this->getDirtyAttributes());
+      // ray($this->getDirtyFields());
 
         $insertData = [
           'authorId'   => $this->authorId,
