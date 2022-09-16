@@ -15,6 +15,7 @@ class RecordQuery extends ElementQuery
     public $eventOwner;
     public $dateEventStart;
     public $dateEventEnd;
+    public $authorId;
 
     public function recordTypeId($value)
     {
@@ -33,6 +34,12 @@ class RecordQuery extends ElementQuery
     public function isEvent($value)
     {
         $this->isEvent = $value;
+        return $this;
+    }
+
+    public function authorId($value)
+    {
+        $this->authorId = $value;
         return $this;
     }
 
@@ -136,6 +143,10 @@ class RecordQuery extends ElementQuery
 
         if ($this->dateEventEnd) {
             $this->subQuery->andWhere(Db::parseParam('microcdp_records.dateEventEnd', $this->dateEventEnd));
+        }
+
+        if ($this->authorId) {
+            $this->subQuery->andWhere(Db::parseParam('microcdp_records.authorId', $this->authorId));
         }
 
 
