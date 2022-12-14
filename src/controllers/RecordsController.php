@@ -106,13 +106,31 @@ class RecordsController extends Controller
               $Record->title = $request->post('title');
             }
 
-            if($request->post('authorId'))
+             if($request->post('authorId'))
             {
               $Record->authorId = $request->post('authorId');
             }
-            else
+            elseif($Record->authorId == "" || $Record->authorId == null )
             {
                 $Record->authorId = $currentUser->id;
+            }
+
+            if($request->post('enabled'))
+            {
+              $Record->enabled = $request->post('enabled');
+            }
+            elseif($Record->enabled == null)
+            {
+              $Record->enabled = 1;
+            }
+
+            if($request->post('archived'))
+            {
+              $Record->archived = $request->post('archived');
+            }
+            elseif($Record->archived == null)
+            {
+              $Record->archived = 0;
             }
 
             if($request->post('fieldLayoutId'))
@@ -235,6 +253,10 @@ class RecordsController extends Controller
               $Record->dateActionCompleteBy = $request->post('dateActionCompleteBy');
             }
 
+            
+
+  
+
 
 
 
@@ -252,8 +274,7 @@ class RecordsController extends Controller
 
             $Record->setFieldValuesFromRequest('fields');
 
-            $Record->enabled = 1;
-            $Record->archived = 0;
+            
 
             $Record->setScenario(RecordElement::SCENARIO_RECORDS);
               //$isSaved = \Craft::$app->elements->saveElement($organisation, true);
